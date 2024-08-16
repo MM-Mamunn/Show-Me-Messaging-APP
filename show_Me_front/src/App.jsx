@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route, Navigate, Link } from "react-router-dom";
 import Signup from "./pages/auth/Signup";
 import Login from "./pages/auth/Login";
 import Home from "./pages/home/Home";
+import Friends from "./pages/home/friend";
 
 function App() {
   const isLoggedIn = () => {
@@ -30,7 +31,7 @@ function App() {
           <BrowserRouter>
             <Routes>
               <Route path="/signup" element={<Signup />} />
-              <Route path="/login" element={<Signup />} />
+              <Route path="/frnds" element={<Friends />} />
               <Route path="/" element={<Home />} />
 
 

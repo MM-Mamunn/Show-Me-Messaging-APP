@@ -11,11 +11,13 @@ const signupNew = async (req, res) => {
 const userCheck = async (req, res) => {
   try {
     const { userName } = req.body;
+    console.log("hi");
+    
     console.log(req);
     
     console.log(userName);
     
-    const ck = await Signup.findOne({userName});
+    const ck = await Signup.find({userName});
     if(ck.length > 0) 
     res.status(200).json({"message":1});
   else
@@ -24,6 +26,7 @@ const userCheck = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
 
 
 const login = async (req, res) => {
