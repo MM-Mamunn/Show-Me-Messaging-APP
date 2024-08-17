@@ -12,6 +12,18 @@ const msgNew = async (req, res) => {
   }
 };
 
+const msgAll = async (req, res) => {
+  try {
+    const { from, to} = req.body;
+    const all = await Messages.find({from,to});
+    const all2 = await Messages.find({from:to,to:from});
+    const all3 = [...all,...all2];
+    all3.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+    res.status(200).json(all3);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
-export {msgNew};
+export {msgNew,msgAll};
 

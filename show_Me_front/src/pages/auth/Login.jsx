@@ -1,33 +1,34 @@
-import React, { useState } from 'react'
-import Nav1 from '../components/nav1'
+import React, { useState } from "react";
+import Nav1 from "../components/nav1";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
-    const [form, setform] = useState({ userName: "", password: "" });
+  const navigate = useNavigate();
+  const [form, setform] = useState({ userName: "", password: "" });
 
-    const handleChange = (e) => {
-        setform({ ...form, [e.target.name]: e.target.value });
-      };
-    const handleLogin = async (e) => {
-        let b = await fetch("http://localhost:3000/api/signup/login/", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(form),
-          });
-          b = await b.json();
-          console.log(b.message);
-      
-          if (b.message == 0) {
-            alert("Invalid Username or password");
-            return;
-          }
-          else 
-          {
-            localStorage.setItem("user", form.userName);
-          }
-        
+  const handleChange = (e) => {
+    setform({ ...form, [e.target.name]: e.target.value });
+  };
+  const handleLogin = async (e) => {
+    let b = await fetch("http://localhost:3000/api/signup/login/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(form),
+    });
+    b = await b.json();
+    console.log(b.message);
+
+    if (b.message == 0) {
+      alert("Invalid Username or password");
+      return;
+    } else {
+      localStorage.setItem("user", form.userName);
+      navigate("/");
+      window.location.href = '/';
     }
+  };
   return (
     <>
       <Nav1 />
@@ -64,7 +65,7 @@ function Login() {
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default Login
+export default Login;

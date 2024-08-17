@@ -78,9 +78,9 @@ function Friends() {
   return (
     <>
     <Nav1 />
-      <div className="bg-blue-50 m-0 p-2 min-h-[98vh]">
+      <div className="bg-blue-50 m-0 p-2 h-[88vh]">
         <div className="flex justify-around m-2">
-          <div className="container border-2 border-blue-950 max-w-[50vw] m-3 max-h-[60vh] bg-blue-300  pt-[60px] rounded-3xl">
+          <div className="container border-2 border-blue-950 max-w-[50vw] m-3 bg-blue-300  pt-[60px] rounded-3xl">
             <div className="flex justify-center items-center ">
               <div className="container2 bg-blue-200 py-4 px-2 inline-block rounded-2xl">
                 <div className="inputs flex flex-col justify-center gap-2 items-center">
@@ -108,7 +108,7 @@ function Friends() {
               <>
                 <div className="line min-w-[40vw] m-2 border-2 border-black"></div>
                 <div className="fnd ml-[200px] mt-3">
-                  <button className="btn  ml-5 bg-blue-800 text-white font-serif font-bold min-w-[20vw] m-auto rounded-lg p-2 ">
+                  <button className="btn no-scrollbar max-w-[20vw] max-h-[40vh] overflow-y-auto overflow-x-clip break-words ml-5 bg-blue-800 text-white   font-serif font-bold min-w-[20vw] m-auto rounded-lg p-2">
                     {searchbox} Not Found
                   </button>
                 </div>
@@ -120,7 +120,7 @@ function Friends() {
                 <div className="fnd ml-[200px] mt-3">
                   <button
                     onClick={handleAdd}
-                    className="btn  ml-5 bg-blue-800 text-white font-serif font-bold min-w-[20vw] m-auto rounded-lg p-2 "
+                    className="btn no-scrollbar max-w-[20vw] max-h-[40vh] overflow-y-auto overflow-x-clip break-words ml-5 bg-blue-800 text-white   font-serif font-bold min-w-[20vw] m-auto rounded-lg p-2 "
                   >
                     Add {searchbox}
                   </button>
@@ -143,7 +143,7 @@ function Friends() {
                       >
                         {index + 1}
                       </div>
-                      <button className="btn  ml-2 bg-blue-800 text-white font-serif font-bold min-w-[20vw] m-auto rounded-lg p-2 ">
+                      <button className="btn truncate  ml-2 bg-blue-800 text-white font-serif font-bold w-[20vw] m-auto rounded-lg p-2 ">
                         {item.userName2}
                       </button>
                     </div>

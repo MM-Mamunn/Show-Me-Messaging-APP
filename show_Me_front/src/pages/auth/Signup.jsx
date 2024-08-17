@@ -9,6 +9,8 @@ function Signup() {
   };
 
   const handleSignup = async (e) => {
+
+    
     let b = await fetch("http://localhost:3000/api/signup/usercheck/", {
       method: "POST",
       headers: {
@@ -19,7 +21,7 @@ function Signup() {
     b = await b.json();
     console.log(b.message);
 
-    if (b.message == 0) {
+    if (b.message == 1) {
       alert("The Username already taken");
       return;
     }
