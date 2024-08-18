@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate, Link } from "react-router-dom";
 
 import Signup from "./pages/auth/Signup";
@@ -23,7 +23,16 @@ function App() {
       localStorage.setItem("user", "9999");
       return 0;
     }
+    
   };
+
+  // useEffect(() => {
+  //  let user = localStorage.getItem("secret");
+  //   if (!user) {
+  //     localStorage.setItem("secret", "9999");
+  //   }
+  // }, []);
+  
   return (
     <>
       <div>

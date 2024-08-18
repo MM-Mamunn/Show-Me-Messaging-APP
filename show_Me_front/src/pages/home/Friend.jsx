@@ -93,6 +93,17 @@ function Friends() {
                     placeholder="Search"
                     className="mx-2 px-1 min-h-[70px] min-w-[400px] my-1 bg-white rounded-2xl"
                   />
+                   {searchbox.length < 5 ? (
+                searchbox.length >= 1 ? (
+                  <div className="text-[14px] font-bold ml-[6vw] text-red-600 ">
+                    {5 - searchbox.length} more characters needed minimum
+                  </div>
+                ) : (
+                  ""
+                )
+              ) : (
+                ""
+              )}
                   <button
                     className="border-2  border-blue-950 text-white px-2 py-1 disabled:bg-blue-900 rounded-lg bg-blue-600"
                     onClick={handleSearch}
