@@ -1,4 +1,5 @@
 import { Friend } from '../models/friend.js';
+import { Messages } from '../models/Messages.js';
 
 const frndNew = async (req, res) => {
   try {
@@ -31,6 +32,13 @@ const friends = async (req, res) => {
       fromm[i].userName2 = temp; // Assign the temporary value (original userName1) to userName2
     } 
   }
+  for(let i = 0; i < fromm.length; i++) {
+    const t = await Messages.findOne({from: fromm[i].userName2 ,to:user, seen: false });
+    let temp = { ...fromm[i], "count": t ? true : false };
+   fromm[i] = temp;
+  }
+  console.log(fromm);
+  
     res.status(200).json(fromm);
   } catch (error) {
     res.status(500).json({ message: error.message });

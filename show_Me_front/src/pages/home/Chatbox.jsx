@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 
-function Chatbox({ chatFriend }) {
+function Chatbox({ chatFriend, sharedstate, setsharedstate }) {
   const [text, settext] = useState("");
   const [user, setuser] = useState("");
   const [all, setall] = useState([]);
   const [hash, sethash] = useState(0);
   const [code, setcode] = useState(0);
+  const [refresh, setrefresh] = useState(0)
   const scrollRef = useRef(null);
   function delay(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
@@ -31,9 +32,32 @@ function Chatbox({ chatFriend }) {
       })
       .join("");
   }
+  useEffect(() => {
+    if(!scrollRef.current && !all.length && hash == -1)
+      return;
+    scrollRef.current.scrollTo(0, scrollRef.current.scrollHeight )
+  }, [scrollRef,all])
+  
+  const refreshcontinious = async () => {
+    await delay(100);
+    await fetchall();
+    if(refresh > 0)
+      setrefresh(0);
+    else 
+    setrefresh(refresh + 1);
+  }
+  function removeKey(array, keyToRemove) {
+    return array.map(obj => {
+        // Create a shallow copy of the object
+        const { [keyToRemove]: _, ...newObj } = obj;
+        return newObj;
+    });
+}
 
   const fetchall = async () => {
     let user = localStorage.getItem("user");
+    console.log("chatfriendd", chatFriend);
+
     let a = {
       from: user,
       to: chatFriend,
@@ -52,11 +76,20 @@ function Chatbox({ chatFriend }) {
       let recoveredString = recoverString(b[i].text, xx);
       b[i].text = recoveredString;
     }
+    
+    const filteredB = removeKey(b, "updatedAt");
+const filteredAll = removeKey(all, "updatedAt");
+
+if (JSON.stringify(filteredB) === JSON.stringify(filteredAll)) {
+    return;
+}
+    
     setall(b);
+    setsharedstate(sharedstate + 1);
   };
-  useEffect(() => {}, [hash]);
   useEffect(() => {
     let u = localStorage.getItem("user");
+
     setuser(u);
     if (!localStorage.getItem("secret") && chatFriend != "9999") {
       sethash(-1);
@@ -68,16 +101,19 @@ function Chatbox({ chatFriend }) {
 
       if (objectfind.length) {
         sethash(objectfind[0].code);
-
+       
         fetchall();
       } else {
         sethash(-1);
       }
+      refreshcontinious();
     }
-  }, [chatFriend, hash]);
+    setsharedstate(sharedstate + 1);
+  }, [chatFriend, hash,refresh]);
 
   const handleChange = (e) => {
     settext(e.target.value);
+    setsharedstate(sharedstate + 1);
   };
 
   function shiftString(str, n) {
@@ -105,6 +141,7 @@ function Chatbox({ chatFriend }) {
     if (newValue === "" || /^[0-9]+$/.test(newValue)) {
       setcode(newValue);
     }
+    setsharedstate(sharedstate + 1);
   };
 
   const handleClick = async (e) => {
@@ -122,7 +159,9 @@ function Chatbox({ chatFriend }) {
     sethash(2);
     fetchall();
   };
-
+  const handlerefresh = () => {
+    fetchall();
+  };
   const handleText = async () => {
     let xx = parseInt(hash, 10);
     const shiftedString = shiftString(text, xx);
@@ -140,6 +179,7 @@ function Chatbox({ chatFriend }) {
       body: JSON.stringify(a),
     });
     b = await b.json();
+    await delay(100);
     fetchall();
     settext("");
   };
@@ -147,10 +187,10 @@ function Chatbox({ chatFriend }) {
     <>
       {hash == -1 && (
         <div className="pt-[70px] min-h-[99vh] bg-blue-50">
-          <div className="flex justify-center items-center container max-w-[50vw] h-[60vh] bg-blue-300 m-auto p-3 rounded-3xl">
+          <div className="flex justify-center items-center container max-w-[50vw] h-[63vh] bg-blue-300 m-auto p-3 rounded-3xl">
             <div className="container2 bg-blue-200 py-4 px-2 inline-block rounded-2xl">
               <div className="inputs flex flex-col justify-center gap-2 items-center">
-                <div className="msg font-bold bg-blue-400 text-blue-900 text-center rounded-lg p-2 w-[20vw]">
+                <div className="msg font-bold bg-blue-400 text-blue-900 text-center rounded-lg break-words  p-2 w-[20vw]">
                   Enter the secret Key between you and {chatFriend}
                 </div>
                 <input
@@ -175,9 +215,27 @@ function Chatbox({ chatFriend }) {
       )}
       {hash != -1 && (
         <div className=" flex flex-col ">
+          {/* <button onClick={handlerefresh} className="h-8 w-8 flex justify-center items-center m-2 hover:bg-blue-600  rounded-full bg-blue-950  ">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              width={24}
+              height={24}
+              color={"#ffffff"}
+              fill={"none"}
+            >
+              <path
+                d="M20.0092 2V5.13219C20.0092 5.42605 19.6418 5.55908 19.4537 5.33333C17.6226 3.2875 14.9617 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button> */}
           <div
             ref={scrollRef}
-            className="scrl overflow-y-scroll no-scroll max-h-[75vh] box border-2 w-full min-h-[76vh]"
+            className="scrl overflow-y-scroll no-scroll scrollbar-thin scrollbar-thumb-blue-700  scrollbar-track-gray-200  h-[77vh] box border-2 w-full "
           >
             {chatFriend == "9999" && (
               <div className="py-[34vh] px-[40px] font-bold text-2xl opacity-30 text text-slate-500">
@@ -191,12 +249,14 @@ function Chatbox({ chatFriend }) {
                   className={
                     item.from == user
                       ? "one text-[20px] bg-blue-700 max-w-[40vw] text-white rounded-xl break-words bo ml-[35vw] mt-2 p-2"
+                      : item.seen == false
+                      ? " one  max-w-[40vw]  break-words text-[20px] bg-slate-600 rounded-xl font-bold text-red-700  ml-[4vw] mt-2 p-2"
                       : "one  max-w-[40vw]  break-words text-[20px] bg-slate-600 rounded-xl text-white ml-[4vw] mt-2 p-2"
                   }
                 >
                   {item.text}
                   <div className="date pl-[340px] opacity-40 text-black text-[20px]">
-                    {item.updatedAt}
+                    {item.createdAt}
                   </div>
                 </div>
               ))}
@@ -208,17 +268,17 @@ function Chatbox({ chatFriend }) {
           </div>
 
           {chatFriend != "9999" && (
-            <div className="input border-2 w-full flex ">
+            <div className="input  w-full flex ">
               <input
                 name="text"
                 value={text}
                 onChange={handleChange}
                 type="text"
                 placeholder="text"
-                className="mx-3 px-2 min-h-[70px] min-w-[70vw] my-1 bg-white rounded-2xl"
+                className="mx-3 px-2 min-h-[70px] min-w-[70vw]  bg-white rounded-2xl"
               />
               <button
-                className=" font  w-[70px] p-2 rounded-full flex justify-center items-center text-white px-2 py-1 disabled:bg-blue-900  bg-blue-600"
+                className=" font  w-[70px] h-[70px] p-1 rounded-full flex justify-center items-center text-white px-2 py-1 disabled:bg-blue-900  bg-blue-600"
                 onClick={handleText}
                 disabled={text.length < 1}
               >

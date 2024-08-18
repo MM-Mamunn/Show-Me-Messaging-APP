@@ -155,7 +155,7 @@ function Friends() {
                         {index + 1}
                       </div>
                       <button className="btn truncate  ml-2 bg-blue-800 text-white font-serif font-bold w-[20vw] m-auto rounded-lg p-2 ">
-                        {item.userName2}
+                        {item._doc.userName2}
                       </button>
                     </div>
                     <div className="line mr-[9px] ml-[75px] min-w-[5vw] mb-[2px] border-2 border-blue-950"></div>

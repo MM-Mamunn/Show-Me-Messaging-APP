@@ -7,5 +7,10 @@ export default {
   theme: {
     extend: {},
   },
-  plugins: [],
+  variants: {
+    scrollbar: ['rounded'], // Enable the 'rounded' variant for scrollbars
+  },
+  plugins: [
+    require('tailwind-scrollbar'), // Add the scrollbar plugin
+  ],
 }
