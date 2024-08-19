@@ -106,8 +106,8 @@ if (JSON.stringify(filteredB) === JSON.stringify(filteredAll)) {
       } else {
         sethash(-1);
       }
-      refreshcontinious();
     }
+    refreshcontinious();
     setsharedstate(sharedstate + 1);
   }, [chatFriend, hash,refresh]);
 
