@@ -33,7 +33,7 @@ function Chatbox({ chatFriend, sharedstate, setsharedstate }) {
       .join("");
   }
   useEffect(() => {
-    if(!scrollRef.current && !all.length && hash == -1)
+    if(!scrollRef.current || !all.length || hash == -1)
       return;
     scrollRef.current.scrollTo(0, scrollRef.current.scrollHeight )
   }, [scrollRef,all])
@@ -232,8 +232,6 @@ if (JSON.stringify(filteredB) === JSON.stringify(filteredAll)) {
                   className={
                     item.from == user
                       ? "one text-[20px] bg-blue-700 max-w-[40vw] text-white rounded-xl break-words bo ml-[35vw] mt-2 p-2"
-                      : item.seen == false
-                      ? " one  max-w-[40vw]  break-words text-[20px] bg-slate-600 rounded-xl font-bold text-red-700  ml-[4vw] mt-2 p-2"
                       : "one  max-w-[40vw]  break-words text-[20px] bg-slate-600 rounded-xl text-white ml-[4vw] mt-2 p-2"
                   }
                 >
