@@ -42,7 +42,7 @@ await mongoose.connect('mongodb://127.0.0.1:27017/showme')
 ...
 ```
 
-Step 4:
+### Step 4:
 You are ready to run.
 Run this command in both **Show_Me_API** and **Show_Me_front**
 
