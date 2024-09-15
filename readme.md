@@ -1,4 +1,4 @@
-# Show Me: A True End-to-End Encrypted Chat App
+# [Show Me: A True End-to-End Encrypted Chat App](https://show-me-front-deploy.vercel.app/)
 
 ## Introduction
 
@@ -49,3 +49,5 @@ Run this command in both **Show_Me_API** and **Show_Me_front**
 ```
 npm run dev
 ```
+
+### ***LIVE*** [LINK](https://show-me-front-deploy.vercel.app/)
