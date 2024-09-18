@@ -52,4 +52,4 @@ npm run dev
 ```
 
 ### ***LIVE*** [LINK](https://show-me-front-deploy.vercel.app/) 
-## The live version and the deployed [**repository**](https://github.com/MM-Mamunn/show_me_front_deploy) is the latest and updated version of this project
+## The live ( deployed ) version [**repository**](https://github.com/MM-Mamunn/show_me_front_deploy) is the latest and updated version of this project
