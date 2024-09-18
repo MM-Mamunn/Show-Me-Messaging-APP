@@ -1,5 +1,6 @@
 # [Show Me: A True End-to-End Encrypted Chat App](https://show-me-front-deploy.vercel.app/)
 
+
 ## Introduction
 
 **Show Me** is a secure chat application that provides true end-to-end encryption using a **Secret Key** for each chatroom. The key is provided by the user and stored only in the browser's local storage, ensuring that messages can only be decrypted on the client side with the key supplied by the client. As a result, messages remain safe and encrypted on the server database.
@@ -50,4 +51,5 @@ Run this command in both **Show_Me_API** and **Show_Me_front**
 npm run dev
 ```
 
-### ***LIVE*** [LINK](https://show-me-front-deploy.vercel.app/)
+### ***LIVE*** [LINK](https://show-me-front-deploy.vercel.app/) 
+## The live version and the deployed [**repository**](https://github.com/MM-Mamunn/show_me_front_deploy) is the latest and updated version of this project
